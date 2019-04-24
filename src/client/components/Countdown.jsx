@@ -1,10 +1,12 @@
 import React from 'react'
 import { useTimer } from './../customHooks/useTimer'
+import Game from './Game'
 
 const Countdown = props => {
-  const [count] = useTimer(5)
+  const [count, setCount] = useTimer(3)
 
-  if (count <= 0) return <React.Fragment>{props.children}</React.Fragment>
+  if (count <= 0)
+    return <Game onSetCount={setCount} onSetStart={props.onSetStart} />
 
   return (
     <React.Fragment>

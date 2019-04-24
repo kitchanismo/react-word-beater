@@ -1,17 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useContext } from 'react'
+import PropTypes from 'prop-types'
 
-const GameOver = (props) => {
-  const { 
-    gameData: {
-      highScore,
-      lastScore,
-      score,
-      level
-    }, 
-    initGame, 
-    quitGame 
-  } = props;
+const GameOver = props => {
+  const {
+    gameData: { highScore, lastScore, score, level },
+    onQuit,
+    onTryAgain
+  } = props
 
   return (
     <div className="beater__gameover fadeIn">
@@ -36,33 +31,31 @@ const GameOver = (props) => {
           <h2>{lastScore}</h2>
         </div>
       )}
-      
+
       <div className="beater__main-actions">
         <button
-            className="button--primary button--big"
-            onClick={initGame}
+          className="button--primary button--big"
+          onClick={() => onTryAgain()}
         >
-        Try Again
+          Try Again
         </button>
         <button
-            className="button--secondary button--big"
-            onClick={quitGame}
+          className="button--secondary button--big"
+          onClick={() => onQuit()}
         >
-        Quit
+          Quit
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 GameOver.propTypes = {
   gameData: PropTypes.shape({
     gameOver: PropTypes.bool,
     score: PropTypes.number,
     level: PropTypes.number
-  }),
-  initGame: PropTypes.func,
-  quitGame: PropTypes.func
-};
+  })
+}
 
-export default GameOver;
+export default GameOver

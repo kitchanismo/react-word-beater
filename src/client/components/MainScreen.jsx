@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Countdown from './Countdown'
 
 const MainScreen = props => {
   const [start, setStart] = useState(false)
@@ -7,7 +8,7 @@ const MainScreen = props => {
     setStart(true)
   }
 
-  if (start) return <React.Fragment>{props.children}</React.Fragment>
+  if (start) return <Countdown onSetStart={setStart} />
 
   return (
     <div className="beater__main fadeIn">

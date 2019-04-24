@@ -1,16 +1,13 @@
 import React from 'react'
 
 import MainScreen from './components/MainScreen'
-import Game from './components/Game'
-import Countdown from './components/Countdown'
+import { GameProvider } from './providers/gameProvider'
 
 const App = () => {
   return (
-    <MainScreen>
-      <Countdown>
-        <Game />
-      </Countdown>
-    </MainScreen>
+    <GameProvider>
+      <MainScreen />
+    </GameProvider>
   )
 }
 

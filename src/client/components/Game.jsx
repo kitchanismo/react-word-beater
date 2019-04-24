@@ -1,25 +1,29 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useContext } from 'react'
 import GameOver from './GameOver'
-
+import { GameContext } from '../context'
+import { useTimer } from '../customHooks/useTimer'
 import { generateWord } from '../helpers/random-word'
 
-import { useMatchingWord } from '../customHooks/useMatchingWord'
-import { useGame } from '../customHooks/useGame'
-import { useTimer } from '../customHooks/useTimer'
-import { useSaveScore } from './../customHooks/useSaveScore'
-import { useGreetings } from './../customHooks/useGreetings'
+const TIMER = 5
+const COUNT = 3
 
 const Game = props => {
-  const [currentWord, setCurrentWord] = useState(undefined)
-  const [typedWord, setTypedWord] = useState('')
+  const {
+    isMatch,
+    currentWord,
+    typedWord,
+    highScore,
+    lastScore,
+    score,
+    level,
+    greetingWrapper,
+    pointsWrapper,
+    setTypedWord,
+    setCurrentWord,
+    onReset
+  } = useContext(GameContext)
 
-  const [timer, setTimer] = useTimer(20)
-
-  const { highScore, lastScore } = useSaveScore(timer <= 0)
-
-  const { isMatch } = useMatchingWord(typedWord, currentWord)
-  const { score, level, points, onReset } = useGame(isMatch)
-  const { greetingWrapper, pointsWrapper } = useGreetings(isMatch, points)
+  const [timer, setTimer] = useTimer(TIMER)
 
   //  like componentDidMount
   useEffect(() => {
@@ -31,30 +35,13 @@ const Game = props => {
     if (isMatch) {
       setTypedWord('')
       setCurrentWord(generateWord())
-      setTimer(20)
+      setTimer(TIMER)
     }
   }, [isMatch])
 
   const handleChange = e => {
     const input = e.target.value.toLowerCase().trim()
     setTypedWord(input)
-  }
-
-  const isGameOver = () => timer <= 0
-
-  const handleReset = () => {
-    onReset()
-    setTimer(20)
-  }
-
-  if (isGameOver()) {
-    return (
-      <GameOver
-        gameData={{ score, level, highScore, lastScore }}
-        initGame={() => handleReset()}
-        quitGame={() => score}
-      />
-    )
   }
 
   const visibleCurrentWord = useRef(null)
@@ -82,6 +69,28 @@ const Game = props => {
     4: ['#F9E606', 'rgba(249, 230, 6, .4)'],
     5: ['#ED06FB', 'rgba(237, 6, 251, .4)'],
     6: ['#9B1BEA', 'rgba(155, 27, 234, .4)']
+  }
+
+  const isGameOver = () => timer <= 0
+
+  const handleTryAgain = () => {
+    props.onSetCount(COUNT)
+    onReset()
+  }
+
+  const handleQuit = () => {
+    props.onSetStart(false)
+    onReset()
+  }
+
+  if (isGameOver()) {
+    return (
+      <GameOver
+        gameData={{ score, level, highScore, lastScore }}
+        onQuit={handleQuit}
+        onTryAgain={handleTryAgain}
+      />
+    )
   }
 
   return (
