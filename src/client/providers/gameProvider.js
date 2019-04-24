@@ -15,7 +15,7 @@ export const GameProvider = props => {
     secondWord: currentWord
   })
 
-  const { points, score, ...game } = useGame({ isMatched: isMatched })
+  const { score, points, ...game } = useGame({ isMatched: isMatched })
 
   const storage = useLocalStorage(score)
   const greetings = useGreeting({ isMatched, points })
@@ -23,8 +23,8 @@ export const GameProvider = props => {
   return (
     <GameContext.Provider
       value={{
-        ...storage,
         ...game,
+        ...storage,
         ...greetings,
         score,
         currentWord,

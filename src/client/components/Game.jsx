@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from 'react'
+import React, { useRef, useEffect, useContext, useState } from 'react'
 import GameOver from './GameOver'
 import { GameContext } from '../context'
 import { useTimer } from '../hooks/useTimer'
@@ -6,16 +6,14 @@ import { generateWord } from '../helpers/random-word'
 
 import withCountdown from './hoc/withCountdown'
 import withMainScreen from './hoc/withMainScreen'
+
 import { useSound } from '../hooks/useSound'
 import { correct } from '../helpers/sound'
 
-const TIMER = 5
 const COUNT = 3
 
 const Game = props => {
   const { onPlay: onCorrect } = useSound({ music: correct })
-
-  const [timer, setTimer] = useTimer(TIMER)
 
   const {
     isMatched,
@@ -24,11 +22,14 @@ const Game = props => {
     score,
     level,
     pointsWrapper,
+    timerBase,
     greetingWrapper,
     setTypedWord,
     setCurrentWord,
     onReset
   } = useContext(GameContext)
+
+  const [timer, setTimer] = useTimer(timerBase)
 
   // act like componentDidMount
   useEffect(() => {
@@ -40,7 +41,7 @@ const Game = props => {
     if (isMatched) {
       setTypedWord('')
       setCurrentWord(generateWord())
-      setTimer(TIMER)
+      setTimer(timerBase)
       onCorrect()
     }
   }, [isMatched])
