@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTimer } from '../../customHooks/useTimer'
+import { useTimer } from '../../hooks/useTimer'
 
 const withCountdown = Component => props => {
   const [count, setCount] = useTimer(3)

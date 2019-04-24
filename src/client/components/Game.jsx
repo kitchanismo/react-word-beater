@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext } from 'react'
 import GameOver from './GameOver'
 import { GameContext } from '../context'
-import { useTimer } from '../customHooks/useTimer'
+import { useTimer } from '../hooks/useTimer'
 import { generateWord } from '../helpers/random-word'
 
 import withCountdown from './hoc/withCountdown'
@@ -44,6 +44,9 @@ const Game = props => {
 
   const handleChange = e => {
     const input = e.target.value.toLowerCase().trim()
+
+    if (input.length > currentWord.length) return
+
     setTypedWord(input)
   }
 

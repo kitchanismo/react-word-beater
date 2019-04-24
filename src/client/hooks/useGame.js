@@ -10,7 +10,11 @@ export const useGame = hasScore => {
       if (score >= 50) {
         setLevel(2)
         setPoints(15)
+      } else if (score >= 100) {
+        setLevel(3)
+        setPoints(20)
       }
+
       setScore(score + points)
     }
   }, [hasScore])
