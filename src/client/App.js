@@ -1,12 +1,15 @@
 import React from 'react'
 
 import Game from './components/Game'
+import Loader from './components/Loader'
 import { GameProvider } from './providers/gameProvider'
 
 const App = () => {
   return (
     <GameProvider>
-      <Game />
+      <Loader>
+        <Game />
+      </Loader>
     </GameProvider>
   )
 }
