@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
 
 export const useMatchingWord = (firstWord, secondWord) => {
-  const [isMatch, setIsMatch] = useState(false)
+  const [isMatched, setIsMatched] = useState(false)
 
   useEffect(() => {
     if (firstWord === secondWord) {
-      setIsMatch(true)
+      setIsMatched(true)
       return
     }
-    setIsMatch(false)
+    setIsMatched(false)
   }, [firstWord, secondWord])
 
-  return { isMatch }
+  return { isMatched }
 }

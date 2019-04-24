@@ -10,11 +10,11 @@ export const GameProvider = props => {
   const [currentWord, setCurrentWord] = useState(undefined)
   const [typedWord, setTypedWord] = useState('')
 
-  const { isMatch } = useMatchingWord(typedWord, currentWord)
-  const { points, score, ...game } = useGame(isMatch)
+  const { isMatched } = useMatchingWord(typedWord, currentWord)
+  const { points, score, ...game } = useGame(isMatched)
 
   const storage = useLocalStorage(score)
-  const greetings = useGreetings(isMatch, points)
+  const greetings = useGreetings(isMatched, points)
 
   return (
     <GameContext.Provider
@@ -25,7 +25,7 @@ export const GameProvider = props => {
         score,
         currentWord,
         typedWord,
-        isMatch,
+        isMatched,
         setCurrentWord,
         setTypedWord
       }}

@@ -1,12 +1,8 @@
-import React, { useState, useContext } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
+import { GameContext } from '../context'
 
-const GameOver = props => {
-  const {
-    gameData: { highScore, lastScore, score, level },
-    onQuit,
-    onTryAgain
-  } = props
+const GameOver = ({ onQuit, onTryAgain }) => {
+  const { highScore, lastScore, score, level } = useContext(GameContext)
 
   return (
     <div className="beater__gameover fadeIn">
@@ -48,14 +44,6 @@ const GameOver = props => {
       </div>
     </div>
   )
-}
-
-GameOver.propTypes = {
-  gameData: PropTypes.shape({
-    gameOver: PropTypes.bool,
-    score: PropTypes.number,
-    level: PropTypes.number
-  })
 }
 
 export default GameOver
