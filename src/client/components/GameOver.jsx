@@ -1,8 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { GameContext } from '../context'
+import { useSound } from '../hooks/useSound'
+import { gameover } from '../helpers/sound'
 
 const GameOver = ({ onQuit, onTryAgain }) => {
   const { highScore, lastScore, score, level } = useContext(GameContext)
+
+  const { onPlay: onGameOver, onStop } = useSound({ music: gameover })
+
+  useEffect(() => {
+    onGameOver()
+    return () => onStop()
+  }, [])
 
   return (
     <div className="beater__gameover fadeIn">

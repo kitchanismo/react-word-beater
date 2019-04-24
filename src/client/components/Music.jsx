@@ -1,30 +1,37 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { main } from '../helpers/sound'
+import { useSound } from '../hooks/useSound'
 
-const Music = ({ audioHandler, audioMuted }) => (
-  <div className="beater__audio-control">
-    <span>MUSIC</span>
-    <div 
+const Music = () => {
+  const { isMuted, setIsMuted } = useSound({
+    music: main,
+    isLoop: true,
+    volume: 0.1,
+    autoplay: true
+  })
+
+  return (
+    <div className="beater__audio-control">
+      <span>MUSIC</span>
+      <div
         className="beater__audio-control-wrapper"
-        onClick={audioHandler}
+        onClick={() => setIsMuted(!isMuted)}
         style={{
-          background: audioMuted ? 'rgba(255, 255, 255, .2)' : 'rgba(153,218,0, .2)'
+          background: isMuted
+            ? 'rgba(255, 255, 255, .2)'
+            : 'rgba(153,218,0, .2)'
         }}
-    >
-      <div 
+      >
+        <div
           className="beater__audio-control-toggle"
           style={{
-            transform: audioMuted ? 'translateX(0)' : 'translateX(100%)',
-            background: audioMuted ? '#cacaca' : '#99da00'
+            transform: isMuted ? 'translateX(0)' : 'translateX(100%)',
+            background: isMuted ? '#cacaca' : '#99da00'
           }}
-      />
+        />
+      </div>
     </div>
-  </div>
-);
+  )
+}
 
-Music.propTypes = {
-  audioHandler: PropTypes.func,
-  audioMuted: PropTypes.bool
-};
-
-export default Music;
+export default Music

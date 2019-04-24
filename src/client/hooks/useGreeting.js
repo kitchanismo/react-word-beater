@@ -1,14 +1,14 @@
 import { generateGreet } from '../helpers/random-word'
 import { useRef, useState, useEffect } from 'react'
 
-export const useGreetings = (isMatch, points) => {
+export const useGreeting = ({ isMatched, points }) => {
   const pointsWrapper = useRef(null)
   const greetingWrapper = useRef(null)
   const [greet, setGreet] = useState(generateGreet())
 
   useEffect(() => {
     // add plus score/greeting tag'
-    if (isMatch) {
+    if (isMatched) {
       setGreet(generateGreet())
 
       const span = document.createElement('span')
@@ -28,6 +28,6 @@ export const useGreetings = (isMatch, points) => {
         greetingWrapper.current.removeChild(h2)
       }, 1000)
     }
-  }, [isMatch])
+  }, [isMatched])
   return { greetingWrapper, pointsWrapper }
 }

@@ -6,11 +6,17 @@ import { generateWord } from '../helpers/random-word'
 
 import withCountdown from './hoc/withCountdown'
 import withMainScreen from './hoc/withMainScreen'
+import { useSound } from '../hooks/useSound'
+import { correct } from '../helpers/sound'
 
 const TIMER = 5
 const COUNT = 3
 
 const Game = props => {
+  const { onPlay: onCorrect } = useSound({ music: correct })
+
+  const [timer, setTimer] = useTimer(TIMER)
+
   const {
     isMatched,
     currentWord,
@@ -24,8 +30,6 @@ const Game = props => {
     onReset
   } = useContext(GameContext)
 
-  const [timer, setTimer] = useTimer(TIMER)
-
   // act like componentDidMount
   useEffect(() => {
     setCurrentWord(generateWord())
@@ -37,6 +41,7 @@ const Game = props => {
       setTypedWord('')
       setCurrentWord(generateWord())
       setTimer(TIMER)
+      onCorrect()
     }
   }, [isMatched])
 
@@ -77,83 +82,62 @@ const Game = props => {
       setTypedWord('')
       onReset()
     }
+
     return <GameOver onQuit={handleQuit} onTryAgain={handleTryAgain} />
   }
 
-  const Greeting = () => {
-    return <div className="beater__game-greet" ref={greetingWrapper} />
-  }
-
-  const CurrentWord = () => {
-    return (
-      <div className="beater__game-current">
-        <p>TYPE THE WORD</p>
-        <h1 ref={visibleCurrentWord}>{currentWord}</h1>
-      </div>
-    )
-  }
-
-  const GameInfo = () => {
-    const levelColor = {
-      1: ['#fff', 'rgba(255, 255, 255, .4)'],
-      2: ['#488ca1', 'rgba(72, 140, 161, .4)'],
-      3: ['#99da00', 'rgba(153, 218, 0, .4)'],
-      4: ['#F9E606', 'rgba(249, 230, 6, .4)'],
-      5: ['#ED06FB', 'rgba(237, 6, 251, .4)'],
-      6: ['#9B1BEA', 'rgba(155, 27, 234, .4)']
-    }
-
-    return (
-      <div className="beater__game-widgets">
-        <div className="beater__game-widgets-wrapper">
-          <span>Level</span>
-          <h2
-            style={{
-              color: levelColor[level][0],
-              textShadow: `0 0 15px ${levelColor[level][1]}`
-            }}
-          >
-            {level}
-          </h2>
-        </div>
-        <div className="beater__game-widgets-wrapper">
-          <span>Time</span>
-          <h2 className={timer <= 3 ? 'timeRunningOut' : null}>{timer}</h2>
-        </div>
-        <div className="beater__game-widgets-wrapper">
-          <span>Score</span>
-          <div ref={pointsWrapper}>
-            <h2>{score}</h2>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  const Input = () => {
-    return (
-      <input
-        autoFocus
-        className="beater__game-input"
-        onChange={handleChange}
-        onKeyUp={handleKeyUp}
-        placeholder="Start Typing Now!"
-        type="text"
-        value={typedWord}
-      />
-    )
+  const levelColor = {
+    1: ['#fff', 'rgba(255, 255, 255, .4)'],
+    2: ['#488ca1', 'rgba(72, 140, 161, .4)'],
+    3: ['#99da00', 'rgba(153, 218, 0, .4)'],
+    4: ['#F9E606', 'rgba(249, 230, 6, .4)'],
+    5: ['#ED06FB', 'rgba(237, 6, 251, .4)'],
+    6: ['#9B1BEA', 'rgba(155, 27, 234, .4)']
   }
 
   return (
     <div className="beater__game fadeIn">
       <div className="beater__game-wrapper">
-        <Greeting />
+        <div className="beater__game-greet" ref={greetingWrapper} />
 
-        <CurrentWord />
+        <div className="beater__game-current">
+          <p>TYPE THE WORD</p>
+          <h1 ref={visibleCurrentWord}>{currentWord}</h1>
+        </div>
 
-        <GameInfo />
+        <div className="beater__game-widgets">
+          <div className="beater__game-widgets-wrapper">
+            <span>Level</span>
+            <h2
+              style={{
+                color: levelColor[level][0],
+                textShadow: `0 0 15px ${levelColor[level][1]}`
+              }}
+            >
+              {level}
+            </h2>
+          </div>
+          <div className="beater__game-widgets-wrapper">
+            <span>Time</span>
+            <h2 className={timer <= 3 ? 'timeRunningOut' : null}>{timer}</h2>
+          </div>
+          <div className="beater__game-widgets-wrapper">
+            <span>Score</span>
+            <div ref={pointsWrapper}>
+              <h2>{score}</h2>
+            </div>
+          </div>
+        </div>
 
-        <Input />
+        <input
+          autoFocus
+          className="beater__game-input"
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+          placeholder="Start Typing Now!"
+          type="text"
+          value={typedWord}
+        />
       </div>
     </div>
   )

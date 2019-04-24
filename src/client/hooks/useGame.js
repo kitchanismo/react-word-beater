@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
-export const useGame = hasScore => {
+export const useGame = ({ isMatched }) => {
   const [score, setScore] = useState(0)
   const [level, setLevel] = useState(1)
   const [points, setPoints] = useState(10)
 
   useEffect(() => {
-    if (hasScore) {
+    if (isMatched) {
       if (score >= 50) {
         setLevel(2)
         setPoints(15)
@@ -17,7 +17,7 @@ export const useGame = hasScore => {
 
       setScore(score + points)
     }
-  }, [hasScore])
+  }, [isMatched])
 
   const handleReset = () => {
     setScore(0)

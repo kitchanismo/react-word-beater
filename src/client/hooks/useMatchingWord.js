@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export const useMatchingWord = (firstWord, secondWord) => {
+export const useMatchingWord = ({ firstWord, secondWord }) => {
   const [isMatched, setIsMatched] = useState(false)
 
   useEffect(() => {
