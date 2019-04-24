@@ -1,12 +1,12 @@
 import React from 'react'
 
-import MainScreen from './components/MainScreen'
+import Game from './components/Game'
 import { GameProvider } from './providers/gameProvider'
 
 const App = () => {
   return (
     <GameProvider>
-      <MainScreen />
+      <Game />
     </GameProvider>
   )
 }

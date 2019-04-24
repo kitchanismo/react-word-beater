@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
-import Countdown from './Countdown'
 
-const MainScreen = props => {
+const withMainScreen = Component => props => {
   const [start, setStart] = useState(false)
 
-  const handleStart = () => {
-    setStart(true)
-  }
-
-  if (start) return <Countdown onSetStart={setStart} />
+  if (start) return <Component onSetStart={setStart} {...props} />
 
   return (
     <div className="beater__main fadeIn">
@@ -18,7 +13,10 @@ const MainScreen = props => {
         Type every single word correctly in a given time limit to become a word
         beater master!
       </p>
-      <button className="button--primary button--big" onClick={handleStart}>
+      <button
+        className="button--primary button--big"
+        onClick={() => setStart(true)}
+      >
         Start Game
       </button>
 
@@ -38,4 +36,4 @@ const MainScreen = props => {
   )
 }
 
-export default MainScreen
+export default withMainScreen

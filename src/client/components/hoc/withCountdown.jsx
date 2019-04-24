@@ -1,12 +1,10 @@
 import React from 'react'
-import { useTimer } from './../customHooks/useTimer'
-import Game from './Game'
+import { useTimer } from '../../customHooks/useTimer'
 
-const Countdown = props => {
+const withCountdown = Component => props => {
   const [count, setCount] = useTimer(3)
 
-  if (count <= 0)
-    return <Game onSetCount={setCount} onSetStart={props.onSetStart} />
+  if (count <= 0) return <Component onSetCount={setCount} {...props} />
 
   return (
     <React.Fragment>
@@ -20,4 +18,4 @@ const Countdown = props => {
   )
 }
 
-export default Countdown
+export default withCountdown

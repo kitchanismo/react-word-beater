@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import MainScreen from './components/MainScreen'
+import MainScreen from './components/hoc/withMainScreen'
 import Game from './components/Game'
 import GameOver from './components/GameOver'
 import Music from './components/Music'

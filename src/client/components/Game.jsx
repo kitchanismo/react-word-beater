@@ -1,8 +1,11 @@
-import React, { useRef, useState, useEffect, useContext } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import GameOver from './GameOver'
 import { GameContext } from '../context'
 import { useTimer } from '../customHooks/useTimer'
 import { generateWord } from '../helpers/random-word'
+
+import withCountdown from './hoc/withCountdown'
+import withMainScreen from './hoc/withMainScreen'
 
 const TIMER = 5
 const COUNT = 3
@@ -71,8 +74,6 @@ const Game = props => {
     6: ['#9B1BEA', 'rgba(155, 27, 234, .4)']
   }
 
-  const isGameOver = () => timer <= 0
-
   const handleTryAgain = () => {
     props.onSetCount(COUNT)
     onReset()
@@ -83,7 +84,7 @@ const Game = props => {
     onReset()
   }
 
-  if (isGameOver()) {
+  if (timer <= 0) {
     return (
       <GameOver
         gameData={{ score, level, highScore, lastScore }}
@@ -138,4 +139,4 @@ const Game = props => {
   )
 }
 
-export default Game
+export default withMainScreen(withCountdown(Game))
