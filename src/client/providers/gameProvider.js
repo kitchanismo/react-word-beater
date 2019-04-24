@@ -15,7 +15,10 @@ export const GameProvider = props => {
     secondWord: currentWord
   })
 
-  const { score, points, ...game } = useGame({ isMatched: isMatched })
+  const { score, points, ...game } = useGame({
+    isMatched: isMatched,
+    length: typedWord.length
+  })
 
   const storage = useLocalStorage(score)
   const greetings = useGreeting({ isMatched, points })
