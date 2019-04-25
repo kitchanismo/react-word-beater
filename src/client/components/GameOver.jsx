@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from 'react'
-import { GameContext } from '../context'
+import React, { useEffect } from 'react'
 import { useSound } from '../hooks/useSound'
 import { gameover } from '../helpers/sound'
+import { useLocalStorage } from './../hooks/useLocalStorage'
 
-const GameOver = ({ onQuit, onTryAgain }) => {
-  const { highScore, lastScore, score, level } = useContext(GameContext)
+const GameOver = ({ onQuit, onTryAgain, data: { score, level } }) => {
+  const { highScore, lastScore } = useLocalStorage(score)
 
   const { onPlay: onGameOver, onStop } = useSound({ music: gameover })
 

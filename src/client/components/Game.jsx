@@ -1,6 +1,5 @@
-import React, { useRef, useEffect, useContext, useState } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import GameOver from './GameOver'
-import { GameContext } from '../context'
 import { useTimer } from '../hooks/useTimer'
 import { generateWord } from '../helpers/random-word'
 
@@ -9,27 +8,26 @@ import withMainScreen from './hoc/withMainScreen'
 
 import { useSound } from '../hooks/useSound'
 import { correct } from '../helpers/sound'
+import { useMatching } from './../hooks/useMatching'
+import { useGame } from '../hooks/useGame'
+import { useGreeting } from '../hooks/useGreeting'
 
 const COUNT = 3
 
 const Game = props => {
-  const { onPlay: onCorrect } = useSound({ music: correct })
+  const [currentWord, setCurrentWord] = useState(undefined)
 
-  const {
-    isMatched,
-    currentWord,
-    typedWord,
-    score,
-    level,
-    pointsWrapper,
-    timerBase,
-    greetingWrapper,
-    setTypedWord,
-    setCurrentWord,
-    onReset
-  } = useContext(GameContext)
+  const [typedWord, setTypedWord] = useState('')
+
+  const { isMatched } = useMatching({ typedWord, currentWord })
+
+  const { score, points, level, timerBase, onReset } = useGame({ isMatched })
+
+  const { pointsWrapper, greetingWrapper } = useGreeting({ isMatched, points })
 
   const [timer, setTimer] = useTimer(timerBase)
+
+  const { onPlay: onCorrect } = useSound({ music: correct })
 
   // act like componentDidMount
   useEffect(() => {
@@ -84,7 +82,13 @@ const Game = props => {
       onReset()
     }
 
-    return <GameOver onQuit={handleQuit} onTryAgain={handleTryAgain} />
+    return (
+      <GameOver
+        data={{ score, level }}
+        onQuit={handleQuit}
+        onTryAgain={handleTryAgain}
+      />
+    )
   }
 
   const levelColor = {
