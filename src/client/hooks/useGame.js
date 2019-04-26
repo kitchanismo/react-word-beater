@@ -15,16 +15,16 @@ export const useGame = ({ isMatched }) => {
 
   useEffect(() => {
     if (isMatched) {
-      if (score >= 200) {
+      if (score >= 4490) {
         handleLevelUp(3, 6, 25) // lvl 6: 3s
-      } else if (score >= 125) {
+      } else if (score >= 3990) {
         handleLevelUp(6, 5, 20) // lvl 5: 6s
-      } else if (score >= 100) {
-        handleLevelUp(9, 4, 18) // lvl 4: 9s
-      } else if (score >= 75) {
-        handleLevelUp(12, 3, 15) // lvl 3: 12s
-      } else if (score >= 50) {
-        handleLevelUp(15, 2, 13) // lvl 2: 15s
+      } else if (score >= 2490) {
+        handleLevelUp(9, 4, 20) // lvl 4: 9s
+      } else if (score >= 1490) {
+        handleLevelUp(12, 3, 20) // lvl 3: 12s
+      } else if (score >= 40) {
+        handleLevelUp(15, 2, 15) // lvl 2: 15s
       }
 
       setScore(score + points)
