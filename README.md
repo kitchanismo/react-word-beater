@@ -1,17 +1,21 @@
 # Word Beater React Game
-visit live demo at <https://beattheword.netlify.com>
+
+visit live demo at <https://www.thewordbeater.tk>
 
 ### Install Dependencies
+
 ```sh
-$ npm install 
+$ npm install
 ```
 
 ### Run development server
-```sh 
+
+```sh
 $ npm run dev-server
 ```
 
 ### Build the project
+
 ```sh
 $ npm run build
 ```
