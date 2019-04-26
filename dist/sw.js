@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.e7535f76092dde4bd91f70b19afc226b.js"
+  "/precache-manifest.9e320402b67d1771335ed325a4a41cf6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "word-beater"});

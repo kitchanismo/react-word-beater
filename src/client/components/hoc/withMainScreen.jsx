@@ -31,6 +31,8 @@ const withMainScreen = Component => props => {
             Alumo Music on Youtube
           </a>
         </span>
+        <br />
+        <span>Powered by ReactJs Hooks</span>
       </div>
     </div>
   )
